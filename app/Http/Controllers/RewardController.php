@@ -42,7 +42,7 @@ class RewardController extends Controller
 
         $reward->save();
 
-        return redirect('/rewards');
+        return redirect('/rewards/create');
 
     }
 

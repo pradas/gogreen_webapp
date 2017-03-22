@@ -17,6 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('rewards', function (){
-    return \App\Reward::all();
-});
+Route::get('rewards', 'APIRewardController@index');

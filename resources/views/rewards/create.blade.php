@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Create Reward</div>
+                <div class="panel-heading">Crear Premio</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/rewards') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                            <label for="title" class="col-md-4 control-label">Title*</label>
+                            <label for="title" class="col-md-4 control-label">Titulo*</label>
 
                             <div class="col-md-6">
                                 <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" required autofocus>
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('points') ? ' has-error' : '' }}">
-                            <label for="points" class="col-md-4 control-label">Points*</label>
+                            <label for="points" class="col-md-4 control-label">Puntos*</label>
 
                             <div class="col-md-6">
                                 <input id="points" type="text" class="form-control" name="points" value="{{ old('points') }}" required>
@@ -39,20 +39,20 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
-                            <label for="category" class="col-md-4 control-label">Category*</label>
+                            <label for="category" class="col-md-4 control-label">Categoria*</label>
 
                             <div class="col-md-6">
                                 <select id="category" class="form-control" name="category" required>
                                     <option value="0">- Selecciona una categoria -</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        <option value="{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
-                            <label for="end_date" class="col-md-4 control-label">End Date*</label>
+                            <label for="end_date" class="col-md-4 control-label">Fecha finalización*</label>
 
                             <div class="col-md-6">
 
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('exchange_date') ? ' has-error' : '' }}">
-                            <label for="exchange_date" class="col-md-4 control-label">Exchange Date</label>
+                            <label for="exchange_date" class="col-md-4 control-label">Fecha canjeo</label>
 
                             <div class="col-md-6">
 
@@ -94,7 +94,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Create
+                                    Crear
                                 </button>
                             </div>
                         </div>
@@ -111,13 +111,19 @@
         $('#datepicker-end').datepicker({
             language: "es",
             daysOfWeekHighlighted: "0,6",
-            todayHighlight: true
+            todayHighlight: true,
+            format: "dd-mm-yyyy",
+            startDate: "today",
+            autoclose: true
         });
         $('#datepicker-exchange').datepicker({
             language: "es",
             daysOfWeekHighlighted: "0,6",
             todayHighlight: true,
-            clearBtn: true
+            clearBtn: true,
+            format: "dd-mm-yyyy",
+            startDate: "today",
+            autoclose: true
         });
     </script>
 @endsection

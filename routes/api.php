@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('rewards', 'APIRewardController@index');
+
+Route::get('categories', 'APICategoryController@index');

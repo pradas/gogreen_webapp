@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -23,7 +22,7 @@ class APIAuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->role_id = '4';
             $user->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['error' => 'User already exists.'], Response::HTTP_CONFLICT);
         }
 

@@ -22,4 +22,4 @@ Route::post('/signin', 'APIAuthController@signin');
 
 Route::get('/rewards', 'APIRewardController@index');
 
-Route::get('/categories', 'APICategoryController@index2');
+Route::get('/categories', 'APICategoryController@index');

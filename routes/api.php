@@ -21,5 +21,6 @@ Route::post('/users', 'APIAuthController@signup');
 Route::post('/session/new', 'APIAuthController@signin');
 
 Route::get('/rewards', 'APIRewardController@index');
+Route::get('/rewards/{reward}', 'APIRewardController@show');
 
 Route::get('/categories', 'APICategoryController@index');

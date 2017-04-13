@@ -15,13 +15,13 @@ class APICategoryController extends APIController
      */
     public function __construct()
     {
-        $this->middleware('jwt.auth');
-        $this->middleware('api.role:administrator|user');
+        //$this->middleware('jwt.auth');
+        //$this->middleware('api.role:administrator|user');
     }
 
     public function index() {
-        $response = "{ \"categories\": " . Category::all() . "}";
-        return $this->jsonToUTF(Category::all());
+        $response = array("categories" => Category::all());
+        return $this->jsonToUTF($response);
     }
 
 }

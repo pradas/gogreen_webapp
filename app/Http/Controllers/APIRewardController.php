@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Reward;
 use Illuminate\Http\Request;
 
-class APIRewardController extends Controller
+class APIRewardController extends APIController
 {
 
     /**
@@ -15,10 +15,17 @@ class APIRewardController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        //$this->middleware('jwt.auth');
     }
 
-    public function index() {
-        return "{ \"rewards\": " . Reward::all() . "}";
+    public function index()
+    {
+        $response = array("rewards" => Reward::all());
+        return $this->jsonToUTF($response);
+    }
+
+    public function show(Reward $reward)
+    {
+        return $this->jsonToUTF($reward);
     }
 }

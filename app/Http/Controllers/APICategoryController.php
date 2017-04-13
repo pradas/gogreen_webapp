@@ -15,7 +15,7 @@ class APICategoryController extends APIController
      */
     public function __construct()
     {
-        //$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
         //$this->middleware('api.role:administrator|user');
     }
 

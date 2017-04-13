@@ -32,10 +32,16 @@ class APIAuthController extends Controller
     }
 
     public function signin(Request $request){
-        $credentials = $request->only('email', 'password');
+
+        $user = User::where('username', $request->user)->first();
+
+        if($user == null)
+            $user = User::where('email', $request->user)->first();
+
+        $credentials = array("email" => $user->email, "password" => $request->password);
 
         if ( ! $token = JWTAuth::attempt($credentials)) {
-            return response()->json(false, Response::HTTP_UNAUTHORIZED);
+            return response()->json(['error' => 'Wrong mail or password.'], Response::HTTP_UNAUTHORIZED);
         }
 
         return response()->json(compact('token'));

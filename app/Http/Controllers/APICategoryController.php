@@ -23,5 +23,5 @@ class APICategoryController extends APIController
         $response = "{ \"categories\": " . Category::all() . "}";
         return $this->jsonToUTF(Category::all());
     }
-    
+
 }

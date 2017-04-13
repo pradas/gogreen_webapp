@@ -76,9 +76,15 @@ class RewardController extends Controller
     protected function validateReward(Request $request) {
         $validator = \Validator::make($request->all(), [
             'title' => 'required',
+            'description' => 'required',
             'points' => 'required|numeric',
             'category' => 'required|not_in:0',
             'end_date' => 'required',
+            'exchange_info' => 'required',
+            'contact_web' => 'required',
+            'contact_info' => 'required',
+            'exchange_latitude' => 'numeric',
+            'exchange_longitude' => 'numeric',
         ]);
 
         return $validator;
@@ -86,6 +92,7 @@ class RewardController extends Controller
 
     protected function saveReward(Request $request, Reward $reward) {
         $reward->title = $request->title;
+        $reward->description = $request->description;
         $reward->points = $request->points;
         $reward->category_id = $request->category;
         $reward->end_date = Carbon::createFromFormat('d-m-Y', $request->end_date);
@@ -93,6 +100,18 @@ class RewardController extends Controller
             $reward->exchange_date = Carbon::createFromFormat('d-m-Y', $request->exchange_date);
         else
             $reward->exchange_date = null;
+        $reward->exchange_info = $request->exchange_info;
+        $reward->contact_web = $request->contact_web;
+        $reward->contact_info = $request->contact_info;
+        if ($request->exchange_latitude != "")
+            $reward->exchange_latitude = $request->exchange_latitude;
+        else
+            $reward->exchange_latitude = null;
+        if ($request->exchange_longitude != "")
+            $reward->exchange_longitude = $request->exchange_longitude;
+        else
+            $reward->exchange_longitude = null;
+
 
         $reward->save();
     }

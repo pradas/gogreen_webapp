@@ -16,7 +16,7 @@ class AddFieldsAndRoleToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->unique();
             $table->integer('role_id')->unsigned();
-            $table->date('birth_date')->nullable();;
+            $table->date('birth_date')->nullable();
         });
     }
 

@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/session/new', 'APIAuthController@signin');
+Route::post('/session', 'APIAuthController@signin');
 
 Route::get('/rewards', 'APIRewardController@index');
 Route::get('/rewards/{reward}', 'APIRewardController@show');

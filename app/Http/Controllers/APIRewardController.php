@@ -28,4 +28,5 @@ class APIRewardController extends APIController
     {
         return $this->jsonToUTF($reward);
     }
+
 }

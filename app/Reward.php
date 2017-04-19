@@ -25,4 +25,12 @@ class Reward extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+    /**
+     * The users that belong to the reward.
+     */
+    public function users()
+    {
+        return $this->hasMany('App\RewardUser');
+    }
 }

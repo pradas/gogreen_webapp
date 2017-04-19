@@ -32,6 +32,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
+    /**
+     * The rewards that belong to the user.
+     */
+    public function rewards()
+    {
+        return $this->hasMany('App\RewardUser');
+    }
+
     public function hasRole($role)
     {
         if($this->role->name == $role) {

@@ -44,6 +44,8 @@ class APIAuthController extends Controller
             return response()->json(['error' => 'Wrong mail or password.'], Response::HTTP_UNAUTHORIZED);
         }
 
-        return response()->json(compact('token'));
+        $role = $user->role;
+
+        return response()->json(compact('token','role'));
     }
 }

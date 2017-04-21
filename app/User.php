@@ -39,6 +39,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\RewardUser');
     }
+    /**
+     * The favourites that belong to the user.
+     */
+    public function favourite_rewards()
+    {
+        return $this->belongsToMany('App\Reward', 'favourite_rewards');
+    }
 
     public function hasRole($role)
     {

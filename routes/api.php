@@ -29,8 +29,11 @@ Route::post('/users', 'APIAuthController@signup');
 
 Route::get('/users/{username}/rewards', 'APIUserController@indexRewards');
 Route::post('/users/{username}/rewards', 'APIUserController@storeRewards');
-Route::delete('/users/{username}/rewards', 'APIUserController@destroyRewards');
+Route::delete('/users/{username}/rewards/{rewardUser}', 'APIUserController@destroyRewards');
+//DE FORMA TEMPORAL
+Route::get('/users/{username}/rewards/{rewardUser}', 'APIUserController@destroyRewards');
 
-Route::post('/users/{username}/favorite-rewards', 'APIUserController@storeFavoriteRewards');
-Route::delete('/users/{username}/favorite-rewards', 'APIUserController@destroyFavoriteRewards');
+Route::get('/users/{username}/favourite-rewards', 'APIUserController@indexFavouriteRewards');
+Route::post('/users/{username}/favourite-rewards', 'APIUserController@storeFavouriteRewards');
+Route::delete('/users/{username}/favourite-rewards/{reward}', 'APIUserController@destroyFavouriteRewards');
 

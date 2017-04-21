@@ -19,7 +19,7 @@ class APIUserController extends APIController
      */
     public function __construct()
     {
-        //$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
 
     }
 
@@ -33,7 +33,6 @@ class APIUserController extends APIController
         $response = array("rewards" => $tokenUser->rewards);
         return $this->jsonToUTF($response);
     }
-
     public function storeRewards(Request $request, $username)
     {
         $token = JWTAuth::getToken();
@@ -52,28 +51,46 @@ class APIUserController extends APIController
         $rewardUser->save();
 
     }
-    public function destroyRewards($username, $reward)
+    public function destroyRewards($username, RewardUser $rewardUser)
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
+        $rewardUser->used = true;
+        $rewardUser->save();
+
     }
-    public function storeFavoriteRewards(Request $request, $username)
+
+    public function indexFavouriteRewards($username){
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $response = array("rewards" => $tokenUser->favourite_rewards);
+        return $this->jsonToUTF($response);
+
+    }
+    public function storeFavouriteRewards(Request $request, $username)
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
+        $tokenUser->favourite_rewards()->attach($request->reward_id);
+
     }
-    public function destroyFavoriteRewards($username, $favoriteReward)
+    public function destroyFavouriteRewards($username,  Reward $reward)
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $tokenUser->favourite_rewards()->detach($reward->id);
 
     }
 }

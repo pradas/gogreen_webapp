@@ -33,4 +33,12 @@ class Reward extends Model
     {
         return $this->hasMany('App\RewardUser');
     }
+
+    /**
+     * The users that belong to the reward.
+     */
+    public function favouritedBy()
+    {
+        return $this->belongsToMany('App\User', 'favourite_rewards');
+    }
 }

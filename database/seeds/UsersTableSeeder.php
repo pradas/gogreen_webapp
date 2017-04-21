@@ -45,6 +45,7 @@ class UsersTableSeeder extends Seeder
         $user->email = "user@gogreen.com";
         $user->password = bcrypt("Password12");
         $user->role_id = '4';
+        $user->points = 1000;
         $user->save();
 
     }

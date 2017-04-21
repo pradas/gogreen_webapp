@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Reward;
+use App\RewardUser;
 use App\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
@@ -23,12 +25,10 @@ class APIUserController extends APIController
 
     public function indexRewards($username)
     {
-        //$token = JWTAuth::getToken();
-        //$tokenUser = JWTAuth::toUser($token);
-        //if ($tokenUser->username != $username)
-        //    return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
-
-        $tokenUser = User::where('username', $username)->first();
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
         $response = array("rewards" => $tokenUser->rewards);
         return $this->jsonToUTF($response);
@@ -40,6 +40,16 @@ class APIUserController extends APIController
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $requestReward = Reward::find($request->reward_id);
+
+        $tokenUser->points -= $requestReward->points;
+        $tokenUser->save();
+
+        $rewardUser = new RewardUser;
+        $rewardUser->user_id = $tokenUser->id;
+        $rewardUser->reward_id = $requestReward->id;
+        $rewardUser->save();
 
     }
     public function destroyRewards($username, $reward)

@@ -28,8 +28,9 @@ class APIAuthController extends Controller
         }
 
         $token = JWTAuth::fromUser($user);
+        $points = $user->points;
 
-        return response()->json(compact('token'));
+        return response()->json(compact('token', 'points'));
     }
 
     public function signin(Request $request){
@@ -46,7 +47,8 @@ class APIAuthController extends Controller
         }
 
         $role = $user->role->name;
+        $points = $user->points;
 
-        return response()->json(compact('token','role'));
+        return response()->json(compact('token','role', 'points'));
     }
 }

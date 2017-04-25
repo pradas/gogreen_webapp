@@ -3,15 +3,27 @@
 namespace App;
 
 use Carbon\Carbon;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Database\Eloquent\Model;
 
 class Reward extends Model
 {
     protected $hidden = ['category_id', 'created_at', 'updated_at'];
-    protected $appends = ['category'];
+    protected $appends = ['category', 'favourite'];
 
     public function getCategoryAttribute() {
         return $this->attributes['category'] = Category::find($this->attributes['category_id'])->name;
+    }
+    public function getFavouriteAttribute() {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        $result = false;
+        foreach ($tokenUser->favouriteRewards as $reward) {
+            if ($reward->id == $this->attributes['id']) {
+                $result = true;
+            }
+        }
+        return $result;
     }
     public function getEndDateAttribute() {
         return Carbon::createFromFormat('Y-m-d', $this->attributes['end_date'])->format('d-m-Y');

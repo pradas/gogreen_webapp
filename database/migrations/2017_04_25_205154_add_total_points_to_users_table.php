@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPointsToUsersTable extends Migration
+class AddTotalPointsToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddPointsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('points')->default(0);
+            $table->integer('total_points')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddPointsToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('points');
+            $table->dropColumn('total_points');
         });
     }
 }

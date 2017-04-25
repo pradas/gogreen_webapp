@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -24,8 +25,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'updated_at', 'role_id', 'birth_date', 'id'
+        'password', 'remember_token', 'updated_at', 'role_id', 'id'
     ];
+
+    public function getBirthDateAttribute() {
+        return Carbon::createFromFormat('Y-m-d', $this->attributes['birth_date'])->format('d-m-Y');
+    }
+    public function getCreatedAtAttribute() {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('d-m-Y');
+    }
 
     public function role()
     {

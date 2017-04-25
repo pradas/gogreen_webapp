@@ -25,12 +25,44 @@ class APIUserController extends APIController
 
     public function show($username)
     {
+        $user = User::where('username', $username)->first();
+
+        $userInfo = [];
+        $userInfo['name'] = $user->name;
+        $userInfo['username'] = $user->username;
+        $userInfo['total_points'] = $user->total_points;
+        $userInfo['created_at'] = $user->created_at;
+        $userInfo['email'] = $user->email;
+        $userInfo['image'] = $user->image;
+
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username == $username) {
+            $userInfo['points'] = $tokenUser->points;
+            $userInfo['birth_date'] = $tokenUser->birth_date;
+        }
 
-        return $this->jsonToUTF($tokenUser);
+        return $this->jsonToUTF($userInfo);
+    }
+    public function update(Request $request, $username)
+    {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
+        if (isset($request->name)) {
+            $tokenUser->name = $request->name;
+        }
+        if (isset($request->birth_date)) {
+            $tokenUser->birth_date = $request->birth_date;
+        }
+        if (isset($request->email)) {
+            $tokenUser->email = $request->email;
+        }
+        $tokenUser->save();
 
+        return response()->json(['success' => 'User information updated successfully.']);
     }
 
     public function indexRewards($username)

@@ -46,6 +46,8 @@ class UsersTableSeeder extends Seeder
         $user->password = bcrypt("Password12");
         $user->role_id = '4';
         $user->points = 1000;
+        $user->total_points = 1500;
+        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
         $user->save();
 
     }

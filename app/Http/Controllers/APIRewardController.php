@@ -23,8 +23,6 @@ class APIRewardController extends APIController
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
-        if (!$tokenUser->username)
-            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
         $idUserRewards = [];
         foreach ($tokenUser->rewards as $reward){

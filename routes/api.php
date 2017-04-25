@@ -25,7 +25,8 @@ Route::get('/rewards/{reward}', 'APIRewardController@show');
 Route::get('/categories', 'APICategoryController@index');
 
 Route::post('/users', 'APIAuthController@signup');
-
+Route::get('/users/{username}', 'APIUserController@show');
+Route::put('/users/{usernmae}', 'APIUserController@update');
 
 Route::get('/users/{username}/rewards', 'APIUserController@indexRewards');
 Route::post('/users/{username}/rewards', 'APIUserController@storeRewards');

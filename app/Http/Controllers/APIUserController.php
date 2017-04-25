@@ -23,6 +23,16 @@ class APIUserController extends APIController
 
     }
 
+    public function show($username)
+    {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+
+        return $this->jsonToUTF($tokenUser);
+
+
+    }
+
     public function indexRewards($username)
     {
         $token = JWTAuth::getToken();

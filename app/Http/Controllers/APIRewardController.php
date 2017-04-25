@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reward;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
 class APIRewardController extends APIController

@@ -20,7 +20,20 @@ class APIRewardController extends APIController
 
     public function index()
     {
-        $response = array("rewards" => Reward::all());
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if (!$tokenUser->username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $idUserRewards = [];
+        foreach ($tokenUser->rewards as $reward){
+            $idUserRewards[] = $reward->reward_id;
+        }
+        $userRewards = Reward::find($idUserRewards);
+
+        $rewards = Reward::all()->diff($userRewards);
+
+        $response = array("rewards" => $rewards);
         return $this->jsonToUTF($response);
     }
 

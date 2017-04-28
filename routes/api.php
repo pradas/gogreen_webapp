@@ -30,9 +30,9 @@ Route::put('/users/{usernmae}', 'APIUserController@update');
 
 Route::get('/users/{username}/rewards', 'APIUserController@indexRewards');
 Route::post('/users/{username}/rewards', 'APIUserController@storeRewards');
-Route::delete('/users/{username}/rewards/{rewardUser}', 'APIUserController@destroyRewards');
+Route::put('/users/{username}/rewards/{rewardUser}', 'APIUserController@useRewards');
 //DE FORMA TEMPORAL
-Route::get('/users/{username}/rewards/{rewardUser}', 'APIUserController@destroyRewards');
+Route::get('/users/{username}/rewards/{rewardUser}', 'APIUserController@useRewards');
 
 Route::get('/users/{username}/favourite-rewards', 'APIUserController@indexFavouriteRewards');
 Route::post('/users/{username}/favourite-rewards', 'APIUserController@storeFavouriteRewards');

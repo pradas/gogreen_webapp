@@ -93,7 +93,7 @@ class APIUserController extends APIController
         $rewardUser->save();
 
     }
-    public function destroyRewards($username, RewardUser $rewardUser)
+    public function useRewards($username, RewardUser $rewardUser)
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
@@ -117,12 +117,13 @@ class APIUserController extends APIController
     }
     public function storeFavouriteRewards(Request $request, $username)
     {
+
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
-        $tokenUser->favourite_rewards()->attach($request->reward_id);
+        $tokenUser->favouriteRewards()->attach($request->reward_id);
 
     }
     public function destroyFavouriteRewards($username,  Reward $reward)

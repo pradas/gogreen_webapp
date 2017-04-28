@@ -50,5 +50,29 @@ class UsersTableSeeder extends Seeder
         $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
         $user->save();
 
+        $user = new User;
+        $user->name = "User2";
+        $user->username = "user2";
+        $user->birth_date = \Carbon\Carbon::createFromDate(1985, 5, 21);
+        $user->email = "user2@gogreen.com";
+        $user->password = bcrypt("Password12");
+        $user->role_id = '4';
+        $user->points = 1000;
+        $user->total_points = 1500;
+        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
+        $user->save();
+
+        $user = new User;
+        $user->name = "User3";
+        $user->username = "user3";
+        $user->birth_date = \Carbon\Carbon::createFromDate(1985, 5, 21);
+        $user->email = "user3@gogreen.com";
+        $user->password = bcrypt("Password12");
+        $user->role_id = '4';
+        $user->points = 1000;
+        $user->total_points = 1500;
+        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
+        $user->save();
+
     }
 }

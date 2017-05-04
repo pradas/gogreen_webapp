@@ -32,7 +32,7 @@ class APIRewardController extends APIController
 
         $rewards = Reward::all()->diff($userRewards);
 
-        $response = array("rewards" => $rewards);
+        $response = array("rewards" => $rewards->sortBy('end_date'));
         return $this->jsonToUTF($response);
     }
 

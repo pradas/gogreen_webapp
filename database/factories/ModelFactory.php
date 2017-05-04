@@ -22,3 +22,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Reward::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->name,
+        'points' => $faker->unique()->safeEmail,
+        'category_id' => $password ?: $password = bcrypt('secret'),
+        'end_date' => str_random(10),
+    ];
+});

@@ -22,7 +22,7 @@ class APIEventController extends Controller
 
     public function store(Request $request) {
 
-        //try {
+        try {
             $event = new Event;
             $event->title = $request->title;
             $event->description = $request->description;
@@ -32,9 +32,9 @@ class APIEventController extends Controller
             $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
             $event->image = $request->file('image')->store('events');
             $event->save();
-        //} catch (\Exception $e) {
-        //    return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
-        //}
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
+        }
 
     }
 }

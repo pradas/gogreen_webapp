@@ -38,3 +38,5 @@ Route::get('/users/{username}/favourite-rewards', 'APIUserController@indexFavour
 Route::post('/users/{username}/favourite-rewards', 'APIUserController@storeFavouriteRewards');
 Route::delete('/users/{username}/favourite-rewards/{reward}', 'APIUserController@destroyFavouriteRewards');
 
+Route::post('/events', 'APIEventController@store');
+

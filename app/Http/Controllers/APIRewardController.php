@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reward;
+use Carbon\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,9 @@ class APIRewardController extends APIController
         }
         $userRewards = Reward::find($idUserRewards);
 
-        $rewards = Reward::all()->sortBy('end_date')->diff($userRewards);
+        $rewards = Reward::all()->sortBy(function ($reward, $key) {
+                return Carbon::createFromFormat('d-m-Y', $reward['end_date'])->timestamp;
+            })->diff($userRewards);
 
         $response = array("rewards" => $rewards);
         return $this->jsonToUTF($response);
@@ -39,6 +42,10 @@ class APIRewardController extends APIController
     public function show(Reward $reward)
     {
         return $this->jsonToUTF($reward);
+    }
+
+    public function orderByDate($rewardCollection) {
+
     }
 
 }

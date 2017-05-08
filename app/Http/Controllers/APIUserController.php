@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reward;
 use App\RewardUser;
 use App\User;
+use Carbon\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,7 +56,7 @@ class APIUserController extends APIController
             $tokenUser->name = $request->name;
         }
         if (isset($request->birth_date)) {
-            $tokenUser->birth_date = $request->birth_date;
+            $tokenUser->birth_date = Carbon::createFromFormat('d-m-Y', $request->birth_date);
         }
         if (isset($request->email)) {
             $tokenUser->email = $request->email;

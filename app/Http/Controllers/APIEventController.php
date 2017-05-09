@@ -41,9 +41,12 @@ class APIEventController extends APIController
             if (isset($request->date) and isset($request->time)) {
                 $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
             }
-            if ($request->hasFile('image')) {
-                $event->image = $request->file('image')->store('events');
+            if (isset($request->image)) {
+                $event->image = $request->image;
             }
+            //if ($request->hasFile('image')) {
+            //    $event->image = $request->file('image')->store('events');
+            //}
             $event->save();
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);

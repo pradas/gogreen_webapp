@@ -27,10 +27,18 @@ class APIEventController extends Controller
             $event->title = $request->title;
             $event->description = $request->description;
             $event->points = $request->points;
-            $event->adress = $request->adress;
-            $event->company = $request->company;
-            $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
-            $event->image = $request->file('image')->store('events');
+            if (isset($request->adress)) {
+                $event->adress = $request->adress;
+            }
+            if (isset($request->company)) {
+                $event->company = $request->company;
+            }
+            if (isset($request->date) and isset($request->time)) {
+                $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
+            }
+            if ($request->hasFile('image')) {
+                $event->image = $request->file('image')->store('events');
+            }
             $event->save();
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);

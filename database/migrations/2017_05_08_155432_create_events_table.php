@@ -18,9 +18,9 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('points');
-            $table->text('adress');
-            $table->string('company');
-            $table->dateTime('date');
+            $table->text('adress')->nullable();
+            $table->string('company')->nullable();
+            $table->dateTime('date')->nullable();
             $table->text('image')->nullable();
             $table->timestamps();
         });

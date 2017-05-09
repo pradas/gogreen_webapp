@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class APIEventController extends Controller
+class APIEventController extends APIController
 {
     /**
      * Create a new controller instance.
@@ -18,6 +18,11 @@ class APIEventController extends Controller
     {
         $this->middleware('jwt.auth');
 
+    }
+
+    public function index() {
+        $response = array("events" => Event::all());
+        return $this->jsonToUTF($response);
     }
 
     public function store(Request $request) {

@@ -15,6 +15,8 @@
     <!-- <link href="{ asset('css/app.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
 
+    @yield('css')
+
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([

@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Editar Premio</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/rewards/'.$reward->id) }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/rewards/'.$reward->id) }}" enctype='multipart/form-data'>
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
 
@@ -172,6 +172,20 @@
                                     @if ($errors->has('exchange_longitude'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('exchange_longitude') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('reward_image') ? ' has-error' : '' }}">
+                                <label for="reward_image" class="col-md-4 control-label">Imagen</label>
+
+                                <div class="col-md-6">
+                                    <input type="file" id="reward_image" name="reward_image">
+
+                                    @if ($errors->has('reward_image'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('reward_image') }}</strong>
                                     </span>
                                     @endif
                                 </div>

@@ -6,6 +6,7 @@ use App\Category;
 use App\Reward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RewardController extends Controller
 {
@@ -85,6 +86,7 @@ class RewardController extends Controller
             'contact_info' => 'required',
             'exchange_latitude' => 'numeric',
             'exchange_longitude' => 'numeric',
+            'reward_image' => 'file|image',
         ]);
 
         return $validator;
@@ -112,6 +114,12 @@ class RewardController extends Controller
         else
             $reward->exchange_longitude = null;
 
+        if ($request->hasFile('reward_image')) {
+            if ($reward->image != null) {
+                Storage::delete($reward->image);
+            }
+            $reward->image = $request->file('reward_image')->store('rewards');
+        }
 
         $reward->save();
     }

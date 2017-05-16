@@ -15,4 +15,8 @@ class Category extends Model
     {
         return $this->hasMany('App\Reward');
     }
+    public function events()
+    {
+        return $this->hasMany('App\Event');
+    }
 }

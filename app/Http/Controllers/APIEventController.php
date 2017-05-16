@@ -24,9 +24,7 @@ class APIEventController extends APIController
         $response = array("events" => Event::all());
         return $this->jsonToUTF($response);
     }
-
     public function store(Request $request) {
-
         try {
             $event = new Event;
             $event->title = $request->title;
@@ -58,5 +56,8 @@ class APIEventController extends APIController
             return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
         }
 
+    }
+    public function show(Event $event) {
+        return $this->jsonToUTF($event);
     }
 }

@@ -53,14 +53,17 @@ class APIUserController extends APIController
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
-        if (isset($request->name)) {
+        if ($this->isValidParameter($request->name)) {
             $tokenUser->name = $request->name;
         }
-        if (isset($request->birth_date)) {
+        if ($this->isValidParameter($request->birth_date)) {
             $tokenUser->birth_date = Carbon::createFromFormat('d-m-Y', $request->birth_date);
         }
-        if (isset($request->email)) {
+        if ($this->isValidParameter($request->email)) {
             $tokenUser->email = $request->email;
+        }
+        if ($this->isValidParameter($request->points)) {
+            $tokenUser->points += $request->points;
         }
         $tokenUser->save();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,7 +31,8 @@ class APIEventController extends APIController
             $this->saveEvent($request, $event);
             return response()->json(['message' => 'Event created successfully.']);
 
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
@@ -62,8 +64,8 @@ class APIEventController extends APIController
         if ($this->isValidParameter($request->image)) {
             $event->image = $request->image;
         }
-        if ($this->isValidParameter($request->category_id)) {
-            $event->category_id = $request->category_id;
+        if ($this->isValidParameter($request->category)) {
+            $event->category_id = Category::where('name', $request->category)->first()->id;
         }
         //if ($request->hasFile('image')) {
         //    $event->image = $request->file('image')->store('events');

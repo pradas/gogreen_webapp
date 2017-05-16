@@ -44,8 +44,5 @@ class APIRewardController extends APIController
         return $this->jsonToUTF($reward);
     }
 
-    public function orderByDate($rewardCollection) {
-
-    }
 
 }

@@ -63,7 +63,7 @@ class APIUserController extends APIController
         }
         $tokenUser->save();
 
-        return response()->json(['success' => 'User information updated successfully.']);
+        return response()->json(['message' => 'User information updated successfully.']);
     }
 
     public function indexRewards($username)
@@ -93,6 +93,9 @@ class APIUserController extends APIController
         $rewardUser->reward_id = $requestReward->id;
         $rewardUser->save();
 
+        return response()->json(['message' => 'User exchanged a reward successfully.']);
+
+
     }
     public function useRewards($username, RewardUser $rewardUser)
     {
@@ -103,6 +106,7 @@ class APIUserController extends APIController
 
         $rewardUser->used = true;
         $rewardUser->save();
+        return response()->json(['message' => 'User used a reward successfully.']);
 
     }
 
@@ -125,6 +129,7 @@ class APIUserController extends APIController
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
         $tokenUser->favouriteRewards()->attach($request->reward_id);
+        return response()->json(['message' => 'User favourited a reward successfully.']);
 
     }
     public function destroyFavouriteRewards($username,  Reward $reward)
@@ -135,6 +140,7 @@ class APIUserController extends APIController
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
         $tokenUser->favourite_rewards()->detach($reward->id);
+        return response()->json(['message' => 'User unfavourited a reward successfully.']);
 
     }
 }

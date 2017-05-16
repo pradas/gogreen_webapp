@@ -10,4 +10,8 @@ class APIController extends Controller
         return response()->json($response, 200, ['Content-type'=> 'application/json; charset=utf-8'],
             JSON_UNESCAPED_UNICODE);
     }
+
+    protected function isValidParameter($parameter) {
+        return isset($parameter) and $parameter != null;
+    }
 }

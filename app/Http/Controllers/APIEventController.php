@@ -27,37 +27,47 @@ class APIEventController extends APIController
     public function store(Request $request) {
         try {
             $event = new Event;
-            $event->title = $request->title;
-            $event->description = $request->description;
-            $event->points = $request->points;
-            if ($this->isValidParameter($request->adress)) {
-                $event->adress = $request->adress;
-            }
-            if ($this->isValidParameter($request->company)) {
-                $event->company = $request->company;
-            }
-            if ($this->isValidParameter($request->date) and $this->isValidParameter($request->time)) {
-                $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
-            }
-            if ($this->isValidParameter($request->image)) {
-                $event->image = $request->image;
-            }
-            if ($this->isValidParameter($request->category_id)) {
-                $event->category_id = $request->category_id;
-            }
-            //if ($request->hasFile('image')) {
-            //    $event->image = $request->file('image')->store('events');
-            //}
-            $event->save();
-
+            $this->saveEvent($request, $event);
             return response()->json(['message' => 'Event created successfully.']);
 
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
         }
-
     }
     public function show(Event $event) {
         return $this->jsonToUTF($event);
+    }
+    public function update(Request $request, Event $event) {
+        try {
+            $this->saveEvent($request, $event);
+            return response()->json(['message' => 'Event created successfully.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+    public function saveEvent(Request $request, Event $event) {
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->points = $request->points;
+        if ($this->isValidParameter($request->adress)) {
+            $event->adress = $request->adress;
+        }
+        if ($this->isValidParameter($request->company)) {
+            $event->company = $request->company;
+        }
+        if ($this->isValidParameter($request->date) and $this->isValidParameter($request->time)) {
+            $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);
+        }
+        if ($this->isValidParameter($request->image)) {
+            $event->image = $request->image;
+        }
+        if ($this->isValidParameter($request->category_id)) {
+            $event->category_id = $request->category_id;
+        }
+        //if ($request->hasFile('image')) {
+        //    $event->image = $request->file('image')->store('events');
+        //}
+        $event->save();
     }
 }

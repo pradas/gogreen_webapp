@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\Reward;
 use App\RewardUser;
 use App\User;
@@ -139,8 +140,42 @@ class APIUserController extends APIController
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
-        $tokenUser->favourite_rewards()->detach($reward->id);
+        $tokenUser->favouriteRewards()->detach($reward->id);
         return response()->json(['message' => 'User unfavourited a reward successfully.']);
+
+    }
+
+    public function indexFavouriteEvents($username){
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $response = array("events" => $tokenUser->favouriteEvents);
+        return $this->jsonToUTF($response);
+
+    }
+    public function storeFavouriteEvents(Request $request, $username)
+    {
+
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $tokenUser->favouriteEvents()->attach($request->event_id);
+        return response()->json(['message' => 'User favourited an event successfully.']);
+
+    }
+    public function destroyFavouriteEvents($username, Event $event)
+    {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+        if ($tokenUser->username != $username)
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        $tokenUser->favouriteEvents()->detach($event->id);
+        return response()->json(['message' => 'User unfavourited an event successfully.']);
 
     }
 }

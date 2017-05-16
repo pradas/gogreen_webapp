@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Reward', 'favourite_rewards');
     }
 
+    public function favouriteEvents()
+    {
+        return $this->belongsToMany('App\Event', 'favourite_events');
+    }
+
     public function hasRole($role)
     {
         if($this->role->name == $role) {

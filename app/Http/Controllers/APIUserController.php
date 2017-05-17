@@ -50,8 +50,25 @@ class APIUserController extends APIController
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
-        if ($tokenUser->username != $username)
-            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+        if ($tokenUser->username != $username) {
+            $user = User::where('username', $username)->first();
+            if ($user == null)
+                return response()->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+            if ($tokenUser->hasRole('manager') or $tokenUser->hasRole('shopper')) {
+                if ($this->isValidParameter($request->points)) {
+                    $user->points += (int)$request->points;
+                    $user->total_points += (int)$request->points;
+                }
+                $user->save();
+                return response()->json(['message' => 'User information updated successfully.']);
+            }
+
+            return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($this->isValidParameter($request->points)) {
+            return response()->json(['error' => 'Invalid parameter.'], Response::HTTP_BAD_REQUEST);
+        }
 
         if ($this->isValidParameter($request->name)) {
             $tokenUser->name = $request->name;
@@ -61,9 +78,6 @@ class APIUserController extends APIController
         }
         if ($this->isValidParameter($request->email)) {
             $tokenUser->email = $request->email;
-        }
-        if ($this->isValidParameter($request->points)) {
-            $tokenUser->points += (int)$request->points;
         }
         $tokenUser->save();
 

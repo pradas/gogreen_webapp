@@ -63,7 +63,7 @@ class APIUserController extends APIController
             $tokenUser->email = $request->email;
         }
         if ($this->isValidParameter($request->points)) {
-            $tokenUser->points += $request->points;
+            $tokenUser->points += (int)$request->points;
         }
         $tokenUser->save();
 

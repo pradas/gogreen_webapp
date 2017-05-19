@@ -10,7 +10,7 @@ class RewardUser extends Model
     protected $table = 'reward_user';
 
     protected $hidden = ['user_id', 'reward_id', 'created_at', 'updated_at'];
-    protected $appends = ['title', 'points', 'category', 'end_date', 'exchange_date', 'favourite'];
+    protected $appends = ['title', 'points', 'category', 'end_date', 'exchange_date', 'favourite', 'image'];
 
 
     public function getTitleAttribute() {
@@ -30,6 +30,9 @@ class RewardUser extends Model
     }
     public function getFavouriteAttribute() {
         return Reward::find($this->attributes['reward_id'])->favourite;
+    }
+    public function getImageAttribute() {
+        return Reward::find($this->attributes['reward_id'])->image;
     }
 
 

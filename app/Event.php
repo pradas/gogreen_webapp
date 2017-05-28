@@ -40,6 +40,10 @@ class Event extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function shop(){
+        return $this->belongsTo('App\Shop');
+    }
+
     /**
      * The users that belong to the reward.
      */

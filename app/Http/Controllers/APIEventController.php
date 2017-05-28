@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Event;
+use App\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,38 +26,61 @@ class APIEventController extends APIController
         $response = array("events" => Event::all());
         return $this->jsonToUTF($response);
     }
-    public function store(Request $request) {
-        try {
-            $event = new Event;
-            $this->saveEvent($request, $event);
-            return response()->json(['message' => 'Event created successfully.']);
+    public function indexShops(Shop $shop)
+    {
+        $response = array("events" => $shop->events);
+        return $this->jsonToUTF($response);
+    }
+    public function store(Request $request, Shop $shop) {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
 
+        if ($shop->manager->username == $tokenUser->username) {
+            try {
+                $event = new Event;
+                $this->saveEvent($request, $event);
+                return response()->json(['message' => 'Event created successfully.']);
+
+            }
+            catch (\Exception $e) {
+                return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
+            }
         }
-        catch (\Exception $e) {
-            return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
-        }
+        return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
     public function show(Event $event) {
         return $this->jsonToUTF($event);
     }
-    public function update(Request $request, Event $event) {
-        try {
-            $this->saveEvent($request, $event);
-            return response()->json(['message' => 'Event created successfully.']);
+    public function showShops(Shop $shop, Event $event)
+    {
+        return $this->jsonToUTF($event);
+    }
+    public function update(Request $request,Shop $shop, Event $event) {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
+        if ($shop->manager->username == $tokenUser->username) {
+            try {
+                $this->saveEvent($request, $event);
+                return response()->json(['message' => 'Event created successfully.']);
+
+            }
+            catch (\Exception $e) {
+                return response()->json(['error' => 'Something went wrong.'], Response::HTTP_NOT_ACCEPTABLE);
+            }
         }
+        return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
     public function saveEvent(Request $request, Event $event) {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+
         $event->title = $request->title;
         $event->description = $request->description;
         $event->points = $request->points;
+        $event->shop_id = $tokenUser->manages->id;
         if ($this->isValidParameter($request->adress)) {
             $event->adress = $request->adress;
-        }
-        if ($this->isValidParameter($request->company)) {
-            $event->company = $request->company;
         }
         if ($this->isValidParameter($request->date) and $this->isValidParameter($request->time)) {
             $event->date = Carbon::createFromFormat('d-m-Y H:i', $request->date.' '.$request->time);

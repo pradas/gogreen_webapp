@@ -33,6 +33,7 @@ class Reward extends Model
             return Carbon::createFromFormat('Y-m-d', $this->attributes['exchange_date'])->format('d-m-Y');
     }
 
+
     public function category()
     {
         return $this->belongsTo('App\Category');
@@ -45,6 +46,7 @@ class Reward extends Model
     {
         return $this->hasMany('App\RewardUser');
     }
+
 
     /**
      * The users that belong to the reward.

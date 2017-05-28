@@ -22,6 +22,7 @@ class APIAuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->role_id = '4';
             $user->points = 1000;
+            $user->image = self::DEFAULT_IMAGE;
             $user->save();
         } catch (\Exception $e) {
             return response()->json(['error' => 'User already exists.'], Response::HTTP_CONFLICT);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Shop;
 use App\User;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -64,12 +65,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role_id' => '2',
             'username' => $data['username'],
+            'image' => self::DEFAULT_IMAGE
         ]);
+
+        Shop::create([
+            'name' => 'Tienda de '.$data['name'],
+            'email' => $data['email'],
+            'address' => '',
+            'image' => self::DEFAULT_IMAGE,
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Shop;
 
 class UsersTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->email = "admin@gogreen.com";
         $user->password = bcrypt("Password12");
         $user->role_id = '1';
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
 
         $user = new User;
@@ -27,7 +29,16 @@ class UsersTableSeeder extends Seeder
         $user->email = "manager@gogreen.com";
         $user->password = bcrypt("Password12");
         $user->role_id = '2';
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
+
+        $shop = new Shop;
+        $shop->name = 'Tienda de Manager';
+        $shop->email = 'emilio@manager.org';
+        $shop->address = 'Calle falsa, 123';
+        $shop->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
+        $shop->user_id = $user->id;
+        $shop->save();
 
         $user = new User;
         $user->name = "Shoper";
@@ -36,6 +47,8 @@ class UsersTableSeeder extends Seeder
         $user->email = "shoper@gogreen.com";
         $user->password = bcrypt("Password12");
         $user->role_id = '3';
+        $user->shop_id = $shop->id;
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
 
         $user = new User;
@@ -47,7 +60,7 @@ class UsersTableSeeder extends Seeder
         $user->role_id = '4';
         $user->points = 1000;
         $user->total_points = 1500;
-        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
 
         $user = new User;
@@ -59,7 +72,7 @@ class UsersTableSeeder extends Seeder
         $user->role_id = '4';
         $user->points = 1000;
         $user->total_points = 1500;
-        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
 
         $user = new User;
@@ -71,7 +84,7 @@ class UsersTableSeeder extends Seeder
         $user->role_id = '4';
         $user->points = 1000;
         $user->total_points = 1500;
-        $user->image = "http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg";
+        $user->image = \App\Http\Controllers\Controller::DEFAULT_IMAGE;
         $user->save();
 
     }

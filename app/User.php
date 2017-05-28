@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'role_id'
+        'name', 'email', 'password', 'username', 'role_id', 'image'
     ];
 
     /**
@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
+    public function manages()
+    {
+        return $this->hasOne('App\Shop');
+    }
+
     /**
      * The rewards that belong to the user.
      */
@@ -47,6 +52,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\RewardUser');
     }
+
+    public function works(){
+        return $this->belongsTo('App\Shop');
+    }
+
     /**
      * The favourites that belong to the user.
      */
@@ -58,6 +68,11 @@ class User extends Authenticatable
     public function favouriteEvents()
     {
         return $this->belongsToMany('App\Event', 'favourite_events');
+    }
+
+    public function favouriteDeals()
+    {
+        return $this->belongsToMany('App\Deal', 'favourite_deals');
     }
 
     public function hasRole($role)

@@ -8,6 +8,8 @@ use App\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class APIEventController extends APIController
 {
@@ -35,7 +37,9 @@ class APIEventController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        //var_dump($shop->id);
+
+        if ($shop->id == $tokenUser->manages->id) {
             try {
                 $event = new Event;
                 $this->saveEvent($request, $event);

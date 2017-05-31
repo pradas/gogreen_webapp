@@ -31,7 +31,7 @@ class Shop extends Model
     }
     public function events()
     {
-        return $this->hasMany();
+        return $this->hasMany('App\Event');
     }
 
 }

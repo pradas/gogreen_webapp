@@ -6,6 +6,8 @@ use App\Deal;
 use App\Event;
 use App\Reward;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class APIFavouriteController extends APIController
 {

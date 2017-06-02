@@ -27,3 +27,5 @@ Route::get('/rewards/{reward}', 'RewardController@show');
 Route::get('/rewards/{reward}/edit', 'RewardController@edit');
 Route::put('/rewards/{reward}', 'RewardController@update');
 Route::delete('/rewards/{reward}', 'RewardController@destroy');
+
+Route::get('/use-reward/{reward}', 'UseRewardController@useReward');

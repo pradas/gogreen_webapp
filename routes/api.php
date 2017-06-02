@@ -32,9 +32,6 @@ Route::put('/users/{usernmae}', 'APIUserController@update');
 
 Route::get('/users/{username}/rewards', 'APIUserController@indexRewards');
 Route::post('/users/{username}/rewards', 'APIUserController@storeRewards');
-Route::put('/users/{username}/rewards/{rewardUser}', 'APIUserController@useRewards');
-//DE FORMA TEMPORAL
-Route::get('/users/{username}/rewards/{rewardUser}', 'APIUserController@useRewards');
 
 // bug: infinitos favoritos
 Route::get('/users/{username}/favourite-rewards', 'APIFavouriteController@indexRewards');

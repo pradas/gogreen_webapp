@@ -63,10 +63,10 @@ class APIEventController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
             try {
                 $this->saveEvent($request, $event);
-                return response()->json(['message' => 'Event created successfully.']);
+                return response()->json(['message' => 'Event edited successfully.']);
 
             }
             catch (\Exception $e) {

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\RewardUser;
 use Illuminate\Http\Request;
 
 class UseRewardController extends Controller
 {
-    public function useReward(Reward $reward){
+    public function useReward(RewardUser $reward){
         $reward->used = true;
         $reward->save();
 

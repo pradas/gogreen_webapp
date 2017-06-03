@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Deal;
 use App\Shop;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class APIDealController extends APIController
 {
@@ -34,10 +37,11 @@ class APIDealController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
+
             try {
                 $deal = new Deal();
-                $this->saveEvent($request, $deal);
+                $this->saveDeal($request, $deal);
                 return response()->json(['message' => 'Deal created successfully.']);
 
             }
@@ -60,9 +64,9 @@ class APIDealController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
             try {
-                $this->saveEvent($request, $deal);
+                $this->saveDeal($request, $deal);
                 return response()->json(['message' => 'Deal updated successfully.']);
 
             }
@@ -73,11 +77,11 @@ class APIDealController extends APIController
         return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
 
-    public function saveEvent(Request $request, Deal $deal) {
+    public function saveDeal(Request $request, Deal $deal) {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        $deal->title = $request->title;
+        $deal->name = $request->name;
         $deal->description = $request->description;
         $deal->value = $request->value;
         $deal->shop_id = $tokenUser->manages->id;

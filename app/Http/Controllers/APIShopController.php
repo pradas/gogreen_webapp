@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Shop;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class APIShopController extends APIController
 {
@@ -29,7 +30,7 @@ class APIShopController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
 
             if($this->isValidParameter($request->name)){
                 $shop->name = $request->name;

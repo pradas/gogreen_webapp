@@ -39,7 +39,7 @@ class APIShopController extends APIController
                 $shop->email = $request->email;
             }
             if ($this->isValidParameter($request->address)) {
-                $shop->addess = $request->address;
+                $shop->address = $request->address;
             }
 
             $shop->save();

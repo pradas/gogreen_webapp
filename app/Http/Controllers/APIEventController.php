@@ -92,6 +92,9 @@ class APIEventController extends APIController
         if ($this->isValidParameter($request->image)) {
             $event->image = $request->image;
         }
+        else if (!$this->isValidParameter($event->id)) {
+            $event->image = self::DEFAULT_EVENT_IMAGE;
+        }
         if ($this->isValidParameter($request->category)) {
             $event->category_id = Category::where('name', $request->category)->first()->id;
         }

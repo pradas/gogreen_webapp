@@ -71,14 +71,14 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'role_id' => '2',
             'username' => $data['username'],
-            'image' => self::DEFAULT_IMAGE
+            'image' => self::DEFAULT_USER_IMAGE
         ]);
 
         Shop::create([
             'name' => 'Tienda de '.$data['name'],
             'email' => $data['email'],
             'address' => '',
-            'image' => self::DEFAULT_IMAGE,
+            'image' => self::DEFAULT_USER_IMAGE,
             'user_id' => $user->id,
         ]);
 

@@ -73,5 +73,5 @@ Route::get('/shops/{shop}/deals', 'APIDealController@indexShops');
 Route::post('/shops/{shop}/deals', 'APIDealController@store');
 Route::get('/shops/{shop}/deals/{deal}', 'APIDealController@showShops');
 Route::put('/shops/{shop}/deals/{deal}', 'APIDealController@update');
-Route::delete('/shops/{shop}/deals/{deal}', 'APIDealController@destory');
+Route::delete('/shops/{shop}/deals/{deal}', 'APIDealController@destroy');
 

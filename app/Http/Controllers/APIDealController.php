@@ -76,6 +76,20 @@ class APIDealController extends APIController
         }
         return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
+    public function destroy(Shop $shop, Deal $deal)
+    {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+
+        if ($shop->id == $tokenUser->manages->id) {
+            $deal->favouritedBy()->detach();
+            $deal->delete();
+            return response()->json(['message' => 'Deal updated successfully.']);
+
+
+        }
+        return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
+    }
 
     public function saveDeal(Request $request, Deal $deal) {
         $token = JWTAuth::getToken();

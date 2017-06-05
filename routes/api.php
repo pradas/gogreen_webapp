@@ -54,6 +54,7 @@ Route::get('/shops/{shop}/events', 'APIEventController@indexShops');
 Route::post('/shops/{shop}/events', 'APIEventController@store');
 Route::get('/shops/{shop}/events/{event}', 'APIEventController@showShops');
 Route::put('/shops/{shop}/events/{event}', 'APIEventController@update');
+Route::delete('/shops/{shop}/events/{event}', 'APIEventController@destroy');
 
 Route::get('/shops', 'APIShopController@index');
 Route::get('/shops/{shop}', 'APIShopController@show');
@@ -72,4 +73,5 @@ Route::get('/shops/{shop}/deals', 'APIDealController@indexShops');
 Route::post('/shops/{shop}/deals', 'APIDealController@store');
 Route::get('/shops/{shop}/deals/{deal}', 'APIDealController@showShops');
 Route::put('/shops/{shop}/deals/{deal}', 'APIDealController@update');
+Route::delete('/shops/{shop}/deals/{deal}', 'APIDealController@destory');
 

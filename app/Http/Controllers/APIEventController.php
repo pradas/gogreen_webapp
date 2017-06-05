@@ -75,6 +75,17 @@ class APIEventController extends APIController
         }
         return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
+    public function destroy(Shop $shop, Event $event) {
+        $token = JWTAuth::getToken();
+        $tokenUser = JWTAuth::toUser($token);
+
+        if ($shop->id == $tokenUser->manages->id) {
+            $event->favouritedBy()->detach();
+            $event->delete();
+            return response()->json(['message' => 'Event deleted successfully.']);
+        }
+        return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
+    }
     public function saveEvent(Request $request, Event $event) {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);

@@ -86,6 +86,12 @@ class APIDealController extends APIController
         $deal->value = $request->value;
         $deal->shop_id = $tokenUser->manages->id;
         $deal->date = Carbon::createFromFormat('d-m-Y', $request->date);
+        if ($this->isValidParameter($request->image)) {
+            $deal->image = $request->image;
+        }
+        else if (!$this->isValidParameter($deal->id)) {
+            $deal->image = self::DEFAULT_DEAL_IMAGE;
+        }
         $deal->save();
     }
 

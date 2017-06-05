@@ -6,6 +6,7 @@ use App\Deal;
 use App\Event;
 use App\Reward;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
@@ -39,6 +40,9 @@ class APIFavouriteController extends APIController
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
+        if (!$this->isValidParameter($request->reward_id))
+            return response()->json(['error' => 'deail_id not found.'], Response::HTTP_BAD_REQUEST);
+
         $tokenUser->favouriteRewards()->attach($request->reward_id);
         return response()->json(['message' => 'User favourited a reward successfully.']);
 
@@ -67,11 +71,13 @@ class APIFavouriteController extends APIController
     }
     public function storeEvents(Request $request, $username)
     {
-
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        if (!$this->isValidParameter($request->event_id))
+            return response()->json(['error' => 'event_id not found.'], Response::HTTP_BAD_REQUEST);
 
         $tokenUser->favouriteEvents()->attach($request->event_id);
         return response()->json(['message' => 'User favourited an event successfully.']);
@@ -106,6 +112,9 @@ class APIFavouriteController extends APIController
         $tokenUser = JWTAuth::toUser($token);
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
+
+        if (!$this->isValidParameter($request->deal_id))
+            return response()->json(['error' => 'deail_id not found.'], Response::HTTP_BAD_REQUEST);
 
         $tokenUser->favouriteDeals()->attach($request->deal_id);
         return response()->json(['message' => 'User favourited a deal successfully.']);

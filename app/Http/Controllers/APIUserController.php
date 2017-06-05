@@ -53,7 +53,7 @@ class APIUserController extends APIController
         if ($tokenUser->username != $username) {
             $user = User::where('username', $username)->first();
             if ($user == null)
-                return response()->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+                return response()->json(['error' => $username.' not found'], Response::HTTP_NOT_FOUND);
             if ($tokenUser->hasRole('manager') or $tokenUser->hasRole('shopper')) {
                 if ($this->isValidParameter($request->points)) {
                     $user->points += (int)$request->points;

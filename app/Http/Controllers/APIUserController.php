@@ -79,6 +79,10 @@ class APIUserController extends APIController
         if ($this->isValidParameter($request->email)) {
             $tokenUser->email = $request->email;
         }
+        if ($this->isValidParameter($request->image)) {
+            $tokenUser->image = $request->image;
+        }
+
         $tokenUser->save();
 
         return response()->json(['message' => 'User information updated successfully.']);

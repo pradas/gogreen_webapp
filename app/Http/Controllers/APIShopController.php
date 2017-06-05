@@ -41,6 +41,9 @@ class APIShopController extends APIController
             if ($this->isValidParameter($request->address)) {
                 $shop->address = $request->address;
             }
+            if ($this->isValidParameter($request->image)) {
+                $shop->image = $request->image;
+            }
 
             $shop->save();
             return response()->json(['message' => 'Shop updated successfully.']);

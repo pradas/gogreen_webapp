@@ -78,7 +78,7 @@ class RegisterController extends Controller
             'name' => 'Tienda de '.$data['name'],
             'email' => $data['email'],
             'address' => '',
-            'image' => self::DEFAULT_USER_IMAGE,
+            'image' => self::DEFAULT_SHOP_IMAGE,
             'user_id' => $user->id,
         ]);
 

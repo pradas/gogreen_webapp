@@ -8,7 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class Deal extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $appends = ['favourite'];
+    protected $appends = ['favourite', 'shop'];
 
     public function getFavouriteAttribute() {
         $token = JWTAuth::getToken();
@@ -20,6 +20,10 @@ class Deal extends Model
             }
         }
         return $result;
+    }
+    public function getShopAttribute()
+    {
+        return Shop::find($this->attributes['shop_id'])->name;
     }
 
     public function shop(){

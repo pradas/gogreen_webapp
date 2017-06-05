@@ -118,7 +118,7 @@ class APIFavouriteController extends APIController
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
-        $tokenUser->favouriteEvents()->detach($deal->id);
+        $tokenUser->favouriteDeals()->detach($deal->id);
         return response()->json(['message' => 'User unfavourited a deal successfully.']);
 
     }

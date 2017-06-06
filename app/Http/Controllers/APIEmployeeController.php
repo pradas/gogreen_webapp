@@ -6,7 +6,7 @@ use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Tymon\JWTAuth\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class APIEmployeeController extends APIController
 {

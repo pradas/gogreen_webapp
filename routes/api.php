@@ -64,7 +64,7 @@ Route::delete('/shops/{shop}', 'APIShopController@destroy');
 
 Route::get('/shops/{shop}/employees', 'APIEmployeeController@index');
 Route::post('/shops/{shop}/employees', 'APIEmployeeController@store');
-Route::delete('/shops/{shop}/employees/{user}', 'APIEmployeeController@destroy');
+Route::delete('/shops/{shop}/employees/{username}', 'APIEmployeeController@destroy');
 
 Route::get('/deals', 'APIDealController@index');
 Route::get('/deals/{deal}', 'APIDealController@show');

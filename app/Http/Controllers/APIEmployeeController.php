@@ -30,7 +30,7 @@ class APIEmployeeController extends APIController
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
             $user = new User;
             $user->name = "Empleado";
             $user->username = $request->username;
@@ -45,12 +45,13 @@ class APIEmployeeController extends APIController
         return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }
 
-    public function destroy(Shop $shop, User $user)
+    public function destroy(Shop $shop, $username)
     {
         $token = JWTAuth::getToken();
         $tokenUser = JWTAuth::toUser($token);
 
-        if ($shop->manager->username == $tokenUser->username) {
+        if ($shop->id == $tokenUser->manages->id) {
+            $user = User::where('username', $username);
             $user->delete();
             return response()->json(['message' => 'User deleted successfully.']);
         }

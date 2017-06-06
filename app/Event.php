@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     protected $hidden = ['created_at', 'updated_at', 'category_id'];
-    protected $appends = ['category', 'favourite'];
+    protected $appends = ['category', 'favourite', 'shop'];
 
     public function getCategoryAttribute() {
         return $this->attributes['category'] = Category::find($this->attributes['category_id'])->name;
@@ -25,6 +25,11 @@ class Event extends Model
         }
         return $result;
     }
+    public function getShopAttribute()
+    {
+        return Shop::find($this->attributes['shop_id'])->name;
+    }
+
 
     //Al final victor no quiere la fecha dividida
     /*

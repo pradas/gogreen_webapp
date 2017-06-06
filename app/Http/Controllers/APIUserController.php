@@ -95,7 +95,7 @@ class APIUserController extends APIController
         if ($tokenUser->username != $username)
             return response()->json(['error' => 'Invalid authorization.'], Response::HTTP_CONFLICT);
 
-        $response = array("rewards" => $tokenUser->rewards);
+        $response = array("rewards" => $tokenUser->rewards()->where('used', 0)->get());
         return $this->jsonToUTF($response);
     }
     public function storeRewards(Request $request, $username)

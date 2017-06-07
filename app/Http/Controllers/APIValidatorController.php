@@ -20,4 +20,20 @@ class APIValidatorController extends APIController
         return response()->json(['error' => 'Email not found.'], Response::HTTP_BAD_REQUEST);
 
     }
+
+    public function resetPassword(Request $request)
+    {
+        if ($this->isValidParameter($request->email) && $this->isValidParameter($request->password)) {
+            $user = User::where('email', $request->email)->first();
+            if($user != null) {
+                $user->password = bcrypt($request->password);
+                $user->save();
+                return response()->json(['message' => 'Password reseted.']);
+            }
+            else
+                return response()->json(['error' => 'Invalid email.'], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json(['error' => 'Email not found.'], Response::HTTP_BAD_REQUEST);
+    }
 }

@@ -77,3 +77,4 @@ Route::delete('/shops/{shop}/deals/{deal}', 'APIDealController@destroy');
 
 
 Route::post('/validate-email', 'APIValidatorController@validateEmail');
+Route::put('/reset-password','APIValidatorController@resetPassword');

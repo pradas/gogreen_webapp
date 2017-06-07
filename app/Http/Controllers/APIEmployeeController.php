@@ -40,7 +40,7 @@ class APIEmployeeController extends APIController
             $user->role_id = '3';
             $user->shop_id = $shop->id;
             $user->save();
-            return response()->json(['message' => 'User created successfully.']);
+            return response()->json(['message' => 'User created successfully.'], Response::HTTP_CREATED);
         }
         return response()->json(['message' => 'You d\'ont have permisions.'], Response::HTTP_UNAUTHORIZED);
     }

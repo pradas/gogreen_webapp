@@ -75,3 +75,5 @@ Route::get('/shops/{shop}/deals/{deal}', 'APIDealController@showShops');
 Route::put('/shops/{shop}/deals/{deal}', 'APIDealController@update');
 Route::delete('/shops/{shop}/deals/{deal}', 'APIDealController@destroy');
 
+
+Route::post('/validate-email', 'APIValidatorController@validateEmail');

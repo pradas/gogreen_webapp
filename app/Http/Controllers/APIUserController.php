@@ -82,6 +82,9 @@ class APIUserController extends APIController
         if ($this->isValidParameter($request->image)) {
             $tokenUser->image = $request->image;
         }
+        if ($this->isValidParameter($request->password)) {
+            $tokenUser->password = bcrypt($request->image);
+        }
 
         $tokenUser->save();
 

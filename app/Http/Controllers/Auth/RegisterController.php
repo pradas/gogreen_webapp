@@ -75,6 +75,8 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'image' => self::DEFAULT_USER_IMAGE
         ]);
+        $user->birth_date = \Carbon\Carbon::createFromDate(1995, 5, 21);
+        $user->save();
 
         Shop::create([
             'name' => 'Tienda de '.$data['name'],

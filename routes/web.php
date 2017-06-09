@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/new-manager', 'HomeController@newManager');
 
 Route::get('/rewards', 'RewardController@index');
 Route::get('/rewards/create', 'RewardController@create');

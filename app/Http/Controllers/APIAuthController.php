@@ -54,11 +54,15 @@ class APIAuthController extends Controller
 
         $role = $user->role->name;
         $points = $user->points;
-        $shop_id = "";
         if ($user->role->name == "manager"){
             $shop_id = $user->manages->id;
+            return response()->json(compact('token','role', 'points', 'shop_id'));
+        }
+        else if ($user->role->name == "shopper"){
+            $shop_id = $user->shop_id;
+            return response()->json(compact('token','role', 'points', 'shop_id'));
         }
 
-        return response()->json(compact('token','role', 'points', 'shop_id'));
+        return response()->json(compact('token','role', 'points'));
     }
 }

@@ -38,6 +38,7 @@ class APIEmployeeController extends APIController
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->role_id = '3';
+            $user->image = self::DEFAULT_USER_IMAGE;
             $user->shop_id = $shop->id;
             $user->save();
             return response()->json(['message' => 'User created successfully.'], Response::HTTP_CREATED);

@@ -115,7 +115,7 @@ class RewardController extends Controller
             $reward->exchange_longitude = null;
 
         if ($request->hasFile('reward_image')) {
-            if ($reward->image != null) {
+            if ($reward->image != 'defaults/reward.jpg') {
                 Storage::delete($reward->image);
             }
             $reward->image = $request->file('reward_image')->store('rewards');
